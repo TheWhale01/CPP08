@@ -74,23 +74,6 @@ int Span::longestSpan(void)
 	return (max - min);
 }
 
-template<typename T>
-void Span::iterAdd(typename T::iterator begin, typename T::iterator end)
-{
-	for (typename T::iterator i = begin; i != end; i++)
-	{
-		try
-		{
-			this->addNumber(*i);
-		}
-		catch (std::exception const &e)
-		{
-			std::cerr << e.what() << std::endl;
-			break;
-		}
-	}
-}
-
 /* EXCEPTIONS */
 
 const char *Span::CouldNotFindSpan::what(void) const throw()

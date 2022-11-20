@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 #include <math.h>
 #include <iostream>
 #include <algorithm>
@@ -18,7 +19,23 @@ class Span
 		void addNumber(int nb);
 
 		template<typename T>
-		void iterAdd(typename T::iterator begin, typename T::iterator end);
+		void iterAdd(typename T::iterator begin, typename T::iterator end)
+		{
+			for (typename T::iterator i = begin; i != end; i++)
+			{
+				try
+				{
+					this->addNumber(*i);
+				}
+				catch (std::exception const &e)
+				{
+					std::cerr << e.what() << std::endl;
+					delete this->_tab;
+					this->_tab = new int[this->_max];
+					break;
+				}
+			}
+		}
 
 		class CouldNotFindSpan: public std::exception
 		{
