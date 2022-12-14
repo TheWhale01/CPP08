@@ -46,3 +46,14 @@ int Span::longestSpan(void) const
 	min = *min_element(this->_data.begin(), this->_data.end());
 	return (max - min);
 }
+
+std::ostream &operator<<(std::ostream &stream, Span const &sp)
+{
+	std::vector<int> const v = sp.getData();
+
+	stream << "[";
+	for (std::vector<int>::const_iterator it = v.begin(); it != v.end(); it++)
+		stream << *it << (it + 1 != v.end() ? ", " : "");
+	stream << "]";
+	return (stream);
+}

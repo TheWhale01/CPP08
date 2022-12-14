@@ -8,7 +8,7 @@ int main(void)
 	for (size_t i = 0; i < stack_len; i++)
 		mstack.push(i);
 	std::cout << "Stack content:" << std::endl;
-	for (MutantStack<int>::container_type::iterator i = mstack.begin(); i != mstack.end(); i++)
+	for (MutantStack<int>::iterator i = mstack.begin(); i != mstack.end(); i++)
 		std::cout << "\t" << *i << std::endl;
 	return (0);
 }

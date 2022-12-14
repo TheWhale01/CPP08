@@ -27,6 +27,7 @@ int main(void)
 
 	std::cout << "Using iterAdd member function..." << std::endl;
 	spIter.iterAdd(lst.begin(), lst.end());
+	std::cout << spIter << std::endl;
 	std::cout << spIter.shortestSpan() << std::endl;
 	std::cout << spIter.longestSpan() << std::endl << std::endl;
 

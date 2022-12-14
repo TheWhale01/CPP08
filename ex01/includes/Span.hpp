@@ -31,8 +31,10 @@ class Span
 				size++;
 			if (size && size + _data.size() > _N)
 				throw (SpanFullException());
-			_data.assign(begin, end);
+			_data.insert(_data.end(), begin, end);
 		}
+
+		std::vector<int> const &getData(void) const {return (_data);}
 
 		class DistanceNotFoundException: public std::exception
 		{
@@ -50,3 +52,5 @@ class Span
 		size_t _N;
 		std::vector<int> _data;
 };
+
+std::ostream &operator<<(std::ostream &stream, Span const &sp);

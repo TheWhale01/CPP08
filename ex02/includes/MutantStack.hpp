@@ -3,13 +3,18 @@
 #include <stack>
 #include <iostream>
 
-template<typename T>
+template<class T, class Container = std::deque<T> >
 class MutantStack: public std::stack<T>
 {
 	public:
-		MutantStack(void){return ;}
-		MutantStack(MutantStack const &rhs) {*this = rhs; return;}
-		virtual ~MutantStack(void) {return ;}
+		MutantStack(void) {}
+		MutantStack(MutantStack const &rhs) {*this = rhs;}
+		virtual ~MutantStack(void) {}
+
+		typedef typename Container::iterator iterator;
+		typedef typename Container::const_iterator const_iterator;
+		typedef typename Container::reverse_iterator reverse_iterator;
+		typedef typename Container::const_reverse_iterator const_reverse_iterator;
 
 		MutantStack &operator=(MutantStack const &rhs)
 		{
@@ -19,12 +24,12 @@ class MutantStack: public std::stack<T>
 			return (*this);
 		}
 
-		typedef typename std::stack<T>::container_type container_type;
-
-		typename container_type::iterator begin(void) {return (this->c.begin());}
-		typename container_type::iterator end(void) {return (this->c.end());}
-		typename container_type::const_iterator begin(void) const {return (this->c.begin());}
-		typename container_type::const_iterator end(void) const {return (this->c.end());}
-		typename container_type::const_reverse_iterator rbegin(void) const {return (this->c.rbegin());}
-		typename container_type::const_reverse_iterator rend(void) const {return (this->c.rend());}
+		iterator begin(void) {return (this->c.begin());}
+		iterator end(void) {return (this->c.end());}
+		const_iterator begin(void) const {return (this->c.begin());}
+		const_iterator end(void) const {return (this->c.end());}
+		reverse_iterator rbegin(void) {return (this->c.rbegin());}
+		reverse_iterator rend(void) {return (this->c.rend());}
+		const_reverse_iterator rbegin(void) const {return (this->c.rbegin());}
+		const_reverse_iterator rend(void) const {return (this->c.rend());}
 };
