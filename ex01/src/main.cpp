@@ -26,14 +26,14 @@ int main(void)
 	std::cout << spAdd.longestSpan() << std::endl << std::endl;
 
 	std::cout << "Using iterAdd member function..." << std::endl;
-	spIter.iterAdd< std::list<int> >(lst.begin(), lst.end());
+	spIter.iterAdd(lst.begin(), lst.end());
 	std::cout << spIter.shortestSpan() << std::endl;
 	std::cout << spIter.longestSpan() << std::endl << std::endl;
 
 	std::cout << "Testing with 10 000 numbers span..." << std::endl;
 	for (size_t i = 0; i < 10000; i++)
 		long_range.push_back(i);
-	spRange.iterAdd< std::list<int> >(long_range.begin(), long_range.end());
+	spRange.iterAdd(long_range.begin(), long_range.end());
 	std::cout << spRange.shortestSpan() << std::endl;
 	std::cout << spRange.longestSpan() << std::endl;
 	return (0);

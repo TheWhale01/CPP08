@@ -1,55 +1,52 @@
 #pragma once
 #include <list>
-#include <math.h>
+#include <vector>
+#include <limits>
 #include <iostream>
 #include <algorithm>
 #include <exception>
+#include <bits/stdc++.h>
 
 class Span
 {
 	public:
+		Span(void);
 		Span(size_t N);
 		Span(Span const &rhs);
 		~Span(void);
 
 		Span &operator=(Span const &rhs);
 
-		int	shortestSpan(void);
-		int longestSpan(void);
+		int	shortestSpan(void) const;
+		int longestSpan(void) const;
 		void addNumber(int nb);
 
-		template<typename T>
-		void iterAdd(typename T::iterator begin, typename T::iterator end)
+		template<class InputIterator>
+		void iterAdd(InputIterator begin, InputIterator end)
 		{
-			for (typename T::iterator i = begin; i != end; i++)
-			{
-				try
-				{
-					this->addNumber(*i);
-				}
-				catch (std::exception const &e)
-				{
-					std::cerr << e.what() << std::endl;
-					delete this->_tab;
-					this->_tab = new int[this->_max];
-					break;
-				}
-			}
+			size_t size;
+
+			size = 0;
+			for (InputIterator it = begin; it != end; it++)
+				size++;
+			if (size && size + _data.size() > _N)
+				throw (SpanFullException());
+			_data.assign(begin, end);
 		}
 
-		class CouldNotFindSpan: public std::exception
+		class DistanceNotFoundException: public std::exception
 		{
-			virtual const char *what(void) const throw();
+			public:
+				virtual const char *what(void) const throw() {return ("Distance not found.");}
 		};
 
-		class SpanFullExcpetion: public std::exception
+		class SpanFullException: public std::exception
 		{
-			virtual const char *what(void) const throw();
+			public:
+				virtual const char *what(void) const throw() {return ("Span full.");}
 		};
 
 	private:
-		Span(void);
-		int *_tab;
-		size_t _len;
-		size_t _max;
+		size_t _N;
+		std::vector<int> _data;
 };

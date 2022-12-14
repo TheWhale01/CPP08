@@ -1,36 +1,31 @@
 #pragma once
-#include <list>
-#include <iterator>
+#include <vector>
 #include <iostream>
 #include <algorithm>
-#include <stdexcept>
 
-class OccurenceNotFoundException: public std::exception
+class NotFoundException: public std::exception
 {
 	public:
-		virtual const char *what(void) const throw()
-		{
-			return ("Occurence not found.");
-		}
+		virtual const char *what(void) const throw() {return ("Occurrence Not Found.");}
 };
 
 template<typename T>
-typename T::iterator easyfind(T &container, int nb)
+int easyfind(T container, int nb)
 {
-	typename T::iterator i;
+	typename T::iterator it;
 
-	for (i = container.begin(); i != container.end(); i++)
-		if (*i == nb)
-			return (i);
-	throw (OccurenceNotFoundException());
+	it = std::find(container.begin(), container.end(), nb);
+	if (it == container.end())
+		throw (NotFoundException());
+	return (*it);
 }
 
 template<typename T>
-std::ostream &operator<<(std::ostream &stream, std::list<T> lst)
+std::ostream &operator<<(std::ostream &stream, std::vector<T> v)
 {
 	std::cout << "[";
-	for (typename std::list<T>::iterator i = lst.begin(); i != lst.end(); i++)
-		std::cout << *i << ", ";
-	std::cout << "END]";
+	for (typename std::vector<T>::iterator i = v.begin(); i != v.end(); i++)
+		std::cout << *i << (i + 1 != v.end() ? ", " : "");
+	std::cout << "]";
 	return (stream);
 }

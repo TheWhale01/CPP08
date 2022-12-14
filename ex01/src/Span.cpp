@@ -1,87 +1,48 @@
 #include "Span.hpp"
 
-Span::Span(void)
-{
-	return ;
-}
-
-Span::Span(size_t N): _tab(new int[N]), _len(0), _max(N)
-{
-	return ;
-}
-
-Span::Span(Span const &rhs)
-{
-	*this = rhs;
-	return ;
-}
-
-Span::~Span(void)
-{
-	delete this->_tab;
-	return ;
-}
-
-/* OPERATOR OVERLOADS */
+Span::Span(void): _N(0) {}
+Span::Span(size_t N): _N(N) {}
+Span::Span(Span const &rhs): _N(rhs._N) {*this = rhs;}
+Span::~Span(void) {}
 
 Span &Span::operator=(Span const &rhs)
 {
 	if (this == &rhs)
 		return (*this);
-	delete this->_tab;
-	this->_len = rhs._len;
-	this->_max = rhs._max;
-	this->_tab = rhs._tab;
+	this->_N = rhs._N;
+	this->_data = rhs._data;
 	return (*this);
 }
 
-/* MEMBER FUNCTIONS */
-
-void Span::addNumber(int nb)
+void Span::addNumber(int n)
 {
-	if (this->_len == this->_max)
-		throw (Span::SpanFullExcpetion());
-	this->_tab[this->_len++] = nb;
+	if (this->_data.size() == this->_N)
+		throw (Span::SpanFullException());
+	this->_data.push_back(n);
 }
 
-int Span::shortestSpan(void)
+int Span::shortestSpan(void) const
 {
 	int min;
 
-	min = abs(this->_tab[0] - this->_tab[1]);
-	for (size_t i = 0; i < this->_len - 1; i++)
-		for (size_t j = i + 1; j < this->_len; j++)
-			if (min > abs(this->_tab[i] - this->_tab[j]))
-				min = abs(this->_tab[i] - this->_tab[j]);
+	if (this->_data.size() <= 1 || this->_N <= 1)
+		throw (Span::DistanceNotFoundException());
+	min = std::numeric_limits<int>::max();
+	for (size_t i = 0; i < this->_data.size(); i++)
+		for (size_t j = i + 1; j < this->_data.size(); j++)
+			if (min > abs(this->_data[i] - this->_data[j]))
+				min = abs(this->_data[i] - this->_data[j]);
 	return (min);
-
 }
 
-int Span::longestSpan(void)
+int Span::longestSpan(void) const
 {
-	int min;
 	int max;
+	int min;
 
-	min = this->_tab[0];
-	max = this->_tab[0];
-	for (size_t i = 0; i < this->_len; i++)
-	{
-		if (this->_tab[i] < min)
-			min = this->_tab[i];
-		else if (this->_tab[i] > max)
-			max = this->_tab[i];
-	}
+	if (this->_data.size() <= 1 || this->_N <= 1)
+		throw (Span::DistanceNotFoundException());
+	max = *max_element(this->_data.begin(), this->_data.end());
+	min = *min_element(this->_data.begin(), this->_data.end());
 	return (max - min);
-}
-
-/* EXCEPTIONS */
-
-const char *Span::CouldNotFindSpan::what(void) const throw()
-{
-	return ("Could not find span.");
-}
-
-const char *Span::SpanFullExcpetion::what(void) const throw()
-{
-	return ("Span full.");
 }

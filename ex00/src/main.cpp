@@ -2,14 +2,14 @@
 
 int main(void)
 {
-	std::list<int> lst;
+	std::vector<int> v;
 
 	for (int i = 0; i < 4; i++)
-		lst.push_back(i * 2);
-	std::cout << lst << std::endl;
+		v.push_back(i * 2);
+	std::cout << v << std::endl;
 	try
 	{
-		std::cout << *easyfind(lst, 3) << std::endl;
+		std::cout << easyfind(v, 3) << std::endl;
 	}
 	catch (std::exception const &e)
 	{
@@ -17,7 +17,7 @@ int main(void)
 	}
 	try
 	{
-		std::cout << *easyfind(lst, 4) << std::endl;
+		std::cout << easyfind(v, 4) << std::endl;
 	}
 	catch (std::exception const &e)
 	{
